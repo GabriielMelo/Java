@@ -1,35 +1,38 @@
-package Exercicios.Ex_Vendas;
-
 import java.util.ArrayList;
 
 public class Loja {
-    
-   private ArrayList produtos = new ArrayList<Produto>();
+    private ArrayList<Produto> estoque;
 
-   public void addProduto(ArrayList produtos){
-
-   }
-
-   public void realizarVenda(ArrayList produtos){
-
-   }
-   public void listarProdutos(ArrayList produtos){
-    
-   }
-   public void buscarProduto(ArrayList produtos){
-
-   }
-
-public ArrayList getProdutos() {
-    return produtos;
-}
-
-public void setProdutos(ArrayList produtos) {
-    if(produtos.isEmpty()){
-        throw new IllegalArgumentException("Produto inválido");
-    } else {
-        Produto = produtos;
+    public Loja() {
+        this.estoque = new ArrayList<>();
     }
-}
 
+    public void adicionarProduto(Produto produto) {
+        estoque.add(produto);
+    }
+
+    public void realizarVenda(Venda venda) {
+        for (Produto produtoVendido : venda.getProdutos()) {
+            if (estoque.contains(produtoVendido)) {
+                estoque.remove(produtoVendido);
+            } else {
+                throw new IllegalArgumentException("Produto não disponível no estoque: " + produtoVendido.getNome());
+            }
+        }
+    }
+
+    public void listarProdutosDisponiveis() {
+        for (Produto produto : estoque) {
+            System.out.println(produto.toString());
+        }
+    }
+
+    public Produto buscarProdutoPorCodigo(int codigo) {
+        for (Produto produto : estoque) {
+            if (produto.getCodigo_produto() == codigo) {
+                return produto;
+            }
+        }
+        return null;
+    }
 }
